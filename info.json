@@ -1,7 +1,7 @@
 {
   "name": "Library: Cobet's Utilities",
   "author": "Cobetcknn",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A Library to allow mod authors to ship a \"modinfo.json\" file with their mod that fills in default metadata.\nLargely intended for Non-Nexus mods or adding extra attributes to use.",
   "main": "index.js"
 }
