@@ -34,7 +34,7 @@ Each mod can have a `modinfo.json` holding its Vortex attributes (name, author, 
 | Entry | What it does |
 |---|---|
 | **Logical File Name (Vortex Grouping ID)** | edit how Vortex groups versions of the same mod |
-| **Rules List** | an editable table of the mod's rules: type (requires, after, before, conflicts), `fileExpression`, `logicalFileName`, `idHint` and `versionMatch`. A rule needs at least one of the first three. Changes apply to Vortex at once and are saved to `modinfo.json`. The table scrolls sideways instead of widening the details panel. |
+| **Rules List** | an editable table of the mod's rules: type (requires, after, before, conflicts), `fileExpression`, `logicalFileName` and `versionMatch`. A rule needs a `fileExpression` or `logicalFileName`; a rule's `idHint` is kept but not shown. Changes apply to Vortex at once and are saved to `modinfo.json`. The table scrolls sideways instead of widening the details panel. |
 | **Generate Modinfo File** | write the mod's current attributes and rules to its `modinfo.json` |
 
 It also adds a **Variant** column to the mod table (hidden by default).

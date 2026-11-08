@@ -1,4 +1,4 @@
-// Vortex Library - Cobet's Utilities-v1.0.5
+// Vortex Library - Cobet's Utilities-v1.0.6
 // Importing required libraries
 const path = require('path');
 const {actions,fs,log,selectors,} = require('vortex-api');
@@ -279,8 +279,8 @@ function installModInfo(files, destinationPath) {
 }
 //	*/	// Function, installModInfo v2
 
-//	/*	// Function, RulesTableEditor v4, Editable rules table rendered inside the mod details panel (includes createRuleRow)
-// Columns: Type, fileExpression, logicalFileName, idHint, versionMatch. The table scrolls sideways inside a fixed-width wrapper, so it never widens the details panel.
+//	/*	// Function, RulesTableEditor v5, Editable rules table rendered inside the mod details panel (includes createRuleRow)
+// Columns: Type, fileExpression, logicalFileName, versionMatch (idHint is kept on each rule but not shown). The table scrolls sideways inside a fixed-width wrapper, so it never widens the details panel.
 function RulesTableEditor(props) {
 	const context = props.context;
 	const gameId = props.gameId;
@@ -363,19 +363,19 @@ function RulesTableEditor(props) {
 	const addRow = () => {setRows((currentRows) => [...currentRows,createRuleRow({}),]);};
 	const cellStyle = {border: '1px solid #ccc',padding: '4px',whiteSpace: 'nowrap',};
 	const inputStyle = {width: '100%',boxSizing: 'border-box',};
-	// Text columns, in table order. minWidth keeps each input usable; when they no longer fit the panel, the table scrolls sideways instead of squeezing them.
+	// Text columns shown, in table order. Each input is as wide as its column's name ("ch" = the width of one character), so the table stays compact; when it no longer fits the panel, it scrolls sideways.
+	// idHint is not shown, but a rule's idHint is still kept: createRuleRow reads it into the row and commitRules writes it back.
 	const textColumns = [
-		{field: 'fileExpression',minWidth: '160px',},
-		{field: 'logicalFileName',minWidth: '140px',},
-		{field: 'idHint',minWidth: '110px',},
-		{field: 'versionMatch',minWidth: '90px',},
+		{field: 'fileExpression',width: '15ch',},
+		{field: 'logicalFileName',width: '16ch',},
+		{field: 'versionMatch',width: '13ch',},
 	];
 	// Width the rules table reports to the side panel's layout, whatever its content (same approach as the SPT extension's Source Code table).
 	// The wrapper reports a FIXED width (contain: inline-size), so a wide table can never widen the panel; it fills the panel's width and scrolls horizontally inside it.
 	const reportedWidthPx = 300;
 	return React.createElement('div',{},
 		React.createElement('div',{style: {width: '100%',overflowX: 'auto',contain: 'inline-size',containIntrinsicInlineSize: `${reportedWidthPx}px`,marginBottom: '8px',},},
-			React.createElement('table',{style: {width: '100%',borderCollapse: 'collapse',marginBottom: '0',},className: 'table table-bordered',},
+			React.createElement('table',{style: {width: 'auto',borderCollapse: 'collapse',marginBottom: '0',},className: 'table table-bordered',},
 				React.createElement('thead',{},
 					React.createElement('tr',{},
 						React.createElement('th',{style: cellStyle,},'Type',),
@@ -386,7 +386,7 @@ function RulesTableEditor(props) {
 				React.createElement('tbody',{},
 					...rows.map((row, index) => React.createElement('tr',{key: index,},
 						React.createElement('td',{style: cellStyle,},
-							React.createElement('select',{style: {...inputStyle,minWidth: '100px',},value: row.type,onChange: (event) => handleTypeChange(index,event.target.value,),},
+							React.createElement('select',{style: {...inputStyle,width: '11ch',},value: row.type,onChange: (event) => handleTypeChange(index,event.target.value,),},
 								React.createElement('option',{value: 'requires',},'requires',),
 								React.createElement('option',{value: 'after',},'after',),
 								React.createElement('option',{value: 'before',},'before',),
@@ -395,7 +395,7 @@ function RulesTableEditor(props) {
 						),
 						...textColumns.map((column) =>
 							React.createElement('td',{key: column.field,style: cellStyle,},
-								React.createElement('input',{type: 'text',style: {...inputStyle,minWidth: column.minWidth,},value: row[column.field],onChange: (event) => updateRow(index,column.field,event.target.value,),onBlur: handleTextBlur,}),
+								React.createElement('input',{type: 'text',style: {...inputStyle,width: column.width,},value: row[column.field],onChange: (event) => updateRow(index,column.field,event.target.value,),onBlur: handleTextBlur,}),
 							)),
 						React.createElement('td',{style: {...cellStyle,textAlign: 'center',},},React.createElement('button',{type: 'button',className: 'btn btn-danger btn-xs',onClick: () => removeRow(index),},'X',),),
 					)),
@@ -405,7 +405,7 @@ function RulesTableEditor(props) {
 		React.createElement('button',{type: 'button',className: 'btn btn-default btn-xs',onClick: addRow,},'Add Row',),
 	);
 }
-//	*/	// Function, RulesTableEditor v4
+//	*/	// Function, RulesTableEditor v5
 
 //	/*	// Function, GenerateModinfoButton v1, Writes a modinfo.json for this mod from its current live attributes and rules
 function GenerateModinfoButton(props) {
