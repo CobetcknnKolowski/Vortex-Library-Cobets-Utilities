@@ -2,6 +2,6 @@
   "name": "Library: Cobet's Utilities",
   "author": "Cobetcknn",
   "version": "1.0.6",
-  "description": "A Library to allow mod authors to ship a \"modinfo.json\" file with their mod that fills in default metadata.\nLargely intended for Non-Nexus mods or adding extra attributes to use.",
+  "description": "Keeps each mod's information and rules in a modinfo.json file stored with the mod, so they survive reinstalls and can be shipped with a mod.\nLargely intended for non-Nexus mods, or for adding extra attributes.\n\nFeatures\n- Applies a modinfo.json shipped in a mod's archive when the mod is installed\n- Rules List: edit a mod's rules in the mod details panel\n- Generate Modinfo File button\n- Logical File Name and Variant columns\n- API for game extensions (modMetadataRead, modMetadataWrite, modMetadataExcludeAttributes, modMetadataInstallInstructions)",
   "main": "index.js"
 }
