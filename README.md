@@ -75,21 +75,21 @@ Every log line from the library starts with `Mod Metadata:`.
 
 ### How do I use the Rules List?
 
-The **Rules List** is at the bottom of a mod's details panel (select a mod on the **Mods** page). Each row is one of the mod's dependency rules; editing the table changes the rules in Vortex straight away, and saves them to the mod's `modinfo.json`.
+The **Rules List** is at the bottom of a mod's details panel (select a mod on the **Mods** page). Each row is one of the mod's dependency rules; editing the table changes the rules in Vortex straight away, and saves them to the mod's `modinfo.json`. The round **i** beside the Rules List name shows a short version of this answer.
 
 | Column | What to enter |
 |---|---|
 | **Type** | `requires`: this mod needs the other mod. `after`: when both mods have the same file, this mod's copy wins. `before`: the other mod's copy wins. `conflicts`: the two mods must not be enabled together. |
 | **fileExpression** | The other mod's **archive name**, with `*` as a wildcard. `*~M1219~*` matches any archive whose name contains `~M1219~`. Matching is case-sensitive. |
-| **logicalFileName** | The other mod's **Logical File Name** (Vortex Grouping ID), shown in its details panel. Use it instead of, or as well as, fileExpression. |
-| **versionMatch** | Which versions of the other mod count: `*` for any, `1.0.8` for exactly that one, `>=1.0.0 <1.2.0` for a range. Left empty, it becomes `*`. |
+| **logicalFileName** | The other mod's **Logical File Name** (Vortex Grouping ID), shown in its details panel. An exact match, no wildcards. Give several mods the same Logical File Name and one rule accepts any of them, which helps when more than one mod can satisfy a requirement. When both columns are filled in, Vortex goes by fileExpression. |
+| **versionMatch** | Which versions of the other mod count, as a SemVer range: `*` for any, `1.0.8` for exactly that one, `>=1.0.0 <1.2.0` for a range. Left empty, it becomes `*`. |
 
 - **Add Row** adds an empty row. It becomes a rule once fileExpression or logicalFileName has something in it.
 - Text changes are applied when you click out of the box; a Type change is applied at once.
 - **X** deletes the row and its rule.
 - A rule's **idHint** (the exact mod Vortex found for it, when there is one) is not shown, but is kept when you edit the row.
 
-The rules show up in Vortex's **Dependencies** column like any other rule, and Vortex warns you there about rules that are not met. Without this library, Vortex's own way of making rules still works: drag the dependency icon of one mod onto another, and choose the rule type in the popup.
+The rules show up in Vortex's **Dependencies** column like any other rule, and Vortex warns you there about rules that are not met. Rules are only checked against **enabled** mods. Without this library, Vortex's own way of making rules still works: drag the dependency icon of one mod onto another, and choose the rule type in the popup.
 
 ---
 

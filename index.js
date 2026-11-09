@@ -1,4 +1,4 @@
-// Vortex Library - Cobet's Utilities-v1.0.6
+// Vortex Library - Cobet's Utilities-v1.0.7
 // Importing required libraries
 const path = require('path');
 const {actions,fs,log,selectors,} = require('vortex-api');
@@ -481,8 +481,27 @@ function init(context) {
 		position: 90,
 	});
 	// Vortex Custom Attribute: 'Rules List', position: 90.05
+	// `help` is what puts Vortex's round "i" icon beside the entry's name in the details panel; clicking it shows this text (Markdown) in a popover.
+	const rulesListHelp = [
+		'Each row is one **rule** about another mod. Vortex checks rules against your **enabled** mods. A text change applies when you click out of its box, a Type change at once, and every change is also saved to this mod\'s modinfo.json.',
+		'',
+		'**Type**',
+		'- **requires**: this mod needs a matching mod enabled.',
+		'- **after**: when both mods have the same file, this mod\'s copy wins.',
+		'- **before**: when both mods have the same file, the other mod\'s copy wins.',
+		'- **conflicts**: the two mods must not be enabled together.',
+		'',
+		'**fileExpression** targets the other mod\'s **archive name** (without its extension). A `*` stands for "anything here", so `*~M1219~*` matches every archive with `~M1219~` somewhere in its name, whatever version or other text is around it. That is why tagging archives with their Forge ID, `[~M1219~]` or `[~A201~]`, is useful: one rule then finds every version of that mod. Matching is case-sensitive.',
+		'',
+		'**logicalFileName** targets the other mod\'s **Logical File Name** (Vortex Grouping ID) instead, as an exact match, without wildcards. Give several mods the same Logical File Name and one rule accepts any of them, which is handy when more than one mod can satisfy a requirement. When both columns are filled in, Vortex goes by fileExpression.',
+		'',
+		'**versionMatch** says which versions of the other mod count, as a SemVer range: `*` for any, `1.0.8` for exactly that one, `^1.2.0` or `>=1.0.0 <1.2.0` for a range.',
+		'',
+		'**Add Row** adds an empty row; it becomes a rule once fileExpression or logicalFileName has something in it. **X** deletes a row and its rule.',
+	].join('\n');
 	context.registerTableAttribute('mods', {id: 'mod-metadata-rules-editor',name: 'Rules List',
 		description: 'This mod\'s dependency/conflict rules.',
+		help: rulesListHelp,
 		icon: 'plug',
 		placement: 'detail',
 		calc: (mod) => Array.isArray(mod.rules) ? mod.rules : [],
